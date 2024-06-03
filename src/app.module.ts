@@ -6,9 +6,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './apis/users/users.module';
+import { StaffsModule } from './apis/staffs/staffs.module';
 
 @Module({
   imports: [
+    StaffsModule,
     AuthModule,
     FeedbacksModule,
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
