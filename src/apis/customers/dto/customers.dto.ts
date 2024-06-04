@@ -4,9 +4,9 @@ export class CustomersDto {
     @IsNotEmpty({ message: 'vui lòng nhập tên' })
     username: string;
     @IsEmail()
-    @IsNotEmpty({ message: 'vui lòng nhập nội dung' })
+    @IsNotEmpty({ message: 'vui lòng nhập email' })
     email: string;
-    @IsNotEmpty({ message: 'vui lòng nhập huấn luyện viên' })
+    @IsNotEmpty({ message: 'vui lòng nhập số điện thoại' })
     phone: string;
 
   

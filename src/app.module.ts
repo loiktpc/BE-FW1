@@ -8,9 +8,11 @@ import { AuthModule } from './auth/auth.module';
 import { StaffsModule } from './apis/staffs/staffs.module';
 import { CustomersModule } from './apis/customers/customers.module';
 import { ProductsModule } from './apis/products/products.module';
+import { EmployeesModule } from './apis/employees/employees.module';
 
 @Module({
   imports: [
+    EmployeesModule,
     ProductsModule,
     CustomersModule,  
     StaffsModule,
