@@ -9,9 +9,11 @@ import { StaffsModule } from './apis/staffs/staffs.module';
 import { CustomersModule } from './apis/customers/customers.module';
 import { ProductsModule } from './apis/products/products.module';
 import { EmployeesModule } from './apis/employees/employees.module';
+import { OrdersModule } from './apis/orders/orders.module';
 
 @Module({
   imports: [
+    OrdersModule,
     EmployeesModule,
     ProductsModule,
     CustomersModule,  
