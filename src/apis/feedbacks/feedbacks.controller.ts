@@ -10,33 +10,36 @@ import {
   Param,
   Delete,
   Put,
+  Query,
 } from '@nestjs/common';
 import { FeedbacksService } from './feedbacks.service';
 import { FeedbacksrDto } from './dto/feedbacks.dto';
 import { ResPonsData } from 'src/global/globalClass';
 import { IFeedback } from './interfaces/feedbacks.interfaces';
 
+
 @Controller('feedbacks')
 export class FeedbacksController {
   constructor(private readonly FeedbacksService: FeedbacksService) {}
 
   @Get()
-  async findAll(): Promise<ResPonsData<IFeedback[]>> {
+  async findAll(@Query('page') page: string ,@Query('numberofProduct') numberofProduct : string): Promise<ResPonsData<IFeedback[]>> {
     try {
+      
       return new ResPonsData<IFeedback[]>(
-        await this.FeedbacksService.findAll(),
+        await this.FeedbacksService.findAll(page , numberofProduct),
         HttpStatus.OK,
         HttpMessage.SUCCESS,
       );
     } catch (error) {
       return new ResPonsData<IFeedback[]>(
-        await this.FeedbacksService.findAll(),
+        await this.FeedbacksService.findAll(page , numberofProduct),
         HttpStatus.INTERNAL_SERVER_ERROR,
         HttpMessage.ERROR,
       );
     }
   }
-
+  
   @Post()
   async create(
     @Body() createCatDto: FeedbacksrDto,

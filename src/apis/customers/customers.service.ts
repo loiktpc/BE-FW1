@@ -15,8 +15,13 @@ export class CustomersService {
     return createdCat.save();
   }
 
-  async findAll(): Promise<Customers[]> {
-    return this.CustomersModel.find().exec();
+  async findAll(page , numberofProduct): Promise<Customers[]> {
+    let Npage  =  Number(page) || 1
+    let NnumberofProduct = Number(numberofProduct)
+    return this.CustomersModel.find()
+    .skip((NnumberofProduct * Npage) - NnumberofProduct) 
+    .limit(NnumberofProduct)
+    .exec();;
   }
   async findOne(id: string): Promise<any> {
     if (id.match(this.Regexidmogo)) {

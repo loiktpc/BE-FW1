@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CustomersDto } from './dto/customers.dto';
 
@@ -19,16 +20,16 @@ import { ICustomers } from './interfaces/customers.interface';
 export class CustomersController {
   constructor(private readonly CustomersService: CustomersService) {}
   @Get()
-  async findAll(): Promise<ResPonsData<ICustomers[]>> {
+  async findAll(@Query('page') page: string ,@Query('numberofProduct') numberofProduct : string): Promise<ResPonsData<ICustomers[]>> {
     try {
       return new ResPonsData(
-        await this.CustomersService.findAll(),
+        await this.CustomersService.findAll(page , numberofProduct),
         HttpStatus.OK,
         HttpMessage.SUCCESS,
       );
     } catch (error) {
       return new ResPonsData(
-        await this.CustomersService.findAll(),
+        await this.CustomersService.findAll(page , numberofProduct),
         HttpStatus.INTERNAL_SERVER_ERROR,
         HttpMessage.ERROR,
       );

@@ -6,18 +6,24 @@ import { FeedbacksrDto } from './dto/feedbacks.dto';
 import { IFeedback } from './interfaces/feedbacks.interfaces';
 import { HttpMessage } from 'src/global/globalEnum';
 
+
 @Injectable()
 export class FeedbacksService {
   constructor(
     @InjectModel(Feedback.name)
-    private feedbacksModel: Model<Feedback>,
-  ) {}
+    private feedbacksModel: Model<Feedback> ) {}
   async create(createFeedBacksDto: FeedbacksrDto): Promise<Feedback> {
     const createdCat = new this.feedbacksModel(createFeedBacksDto);
     return createdCat.save();
   }
-  async findAll(): Promise<IFeedback[]> {
-    return await this.feedbacksModel.find().exec();
+  async findAll(page , numberofProduct): Promise<IFeedback[]> {
+     let Npage  =  Number(page) || 1
+     let NnumberofProduct = Number(numberofProduct)
+     
+    return await this.feedbacksModel.find() 
+    .skip((NnumberofProduct * Npage) - NnumberofProduct) 
+    .limit(NnumberofProduct)
+    .exec();
   }
 
   async findOne(id: string): Promise<any>{
