@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -26,16 +27,16 @@ import { v4 as uuidv4 } from 'uuid';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
   @Get()
-  async findAll(): Promise<ResPonsData<IProducts[]>> {
+  async findAll(@Query('q') q: string ): Promise<ResPonsData<IProducts[]>> {
     try {
       return new ResPonsData(
-        await this.productsService.findAll(),
+        await this.productsService.findAll(q),
         HttpStatus.OK,
         HttpMessage.SUCCESS,
       );
     } catch (error) {
       return new ResPonsData(
-        await this.productsService.findAll(),
+        await this.productsService.findAll(q),
         HttpStatus.INTERNAL_SERVER_ERROR,
         HttpMessage.ERROR,
       );

@@ -13,8 +13,12 @@ export class ProductsService {
 
  
 
-  async findAll(): Promise<Products[]> {
-    return this.CustomersModel.find().exec();
+  async findAll(q? : string): Promise<Products[]> {
+    if(q){      
+      return this.CustomersModel.find({'name' : new RegExp(q, 'i')}).exec();
+    }else{
+      return this.CustomersModel.find().exec();
+    }
   }
 
   async create(createCatDto: ProductsDto , filename: string): Promise<Products> {

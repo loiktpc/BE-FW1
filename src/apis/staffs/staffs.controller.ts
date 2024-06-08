@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { StaffsService } from './staffs.service';
 import { StaffsDto } from './dto/staffs.dto';
@@ -18,16 +19,16 @@ import { HttpMessage } from 'src/global/globalEnum';
 export class StaffsController {
   constructor(private readonly staffsService: StaffsService) {}
   @Get()
-  async findAll(): Promise<ResPonsData<Istaffs[]>> {
+  async findAll(@Query('q') q: string): Promise<ResPonsData<Istaffs[]>> {
     try {
       return new ResPonsData(
-        await this.staffsService.findAll(),
+        await this.staffsService.findAll(q),
         HttpStatus.OK,
         HttpMessage.SUCCESS,
       );
     } catch (error) {
       return new ResPonsData(
-        await this.staffsService.findAll(),
+        await this.staffsService.findAll(q),
         HttpStatus.INTERNAL_SERVER_ERROR,
         HttpMessage.ERROR,
       );

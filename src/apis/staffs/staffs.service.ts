@@ -15,8 +15,12 @@ export class StaffsService {
     return createdCat.save();
   }
 
-  async findAll(): Promise<Staffs[]> {
-    return this.StaffModel.find().exec();
+  async findAll(q?:string): Promise<Staffs[]> {
+    if(q){      
+      return this.StaffModel.find({'username' : new RegExp(q, 'i')}).exec();
+    }else{
+      return this.StaffModel.find().exec();
+    }
   }
   async findOne(id: string): Promise<any> {
     if (id.match(this.Regexidmogo)) {
