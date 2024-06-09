@@ -11,17 +11,19 @@ import {
   Delete,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { FeedbacksService } from './feedbacks.service';
 import { FeedbacksrDto } from './dto/feedbacks.dto';
 import { ResPonsData } from 'src/global/globalClass';
 import { IFeedback } from './interfaces/feedbacks.interfaces';
+import { AuthGuard } from 'src/auth/guards/authorization.guard';
 
 
 @Controller('feedbacks')
 export class FeedbacksController {
   constructor(private readonly FeedbacksService: FeedbacksService) {}
-
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(@Query('page') page: string ,@Query('numberofProduct') numberofProduct : string): Promise<ResPonsData<IFeedback[]>> {
     try {
@@ -39,7 +41,7 @@ export class FeedbacksController {
       );
     }
   }
-  
+  @UseGuards(AuthGuard)
   @Post()
   async create(
     @Body() createCatDto: FeedbacksrDto,
@@ -58,6 +60,7 @@ export class FeedbacksController {
       );
     }
   }
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(
     @Param('id') id: string,
@@ -76,6 +79,7 @@ export class FeedbacksController {
       );
     }
   }
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<ResPonsData<IFeedback>> {
    try {
@@ -92,6 +96,7 @@ export class FeedbacksController {
     );
    }
   }
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(@Param('id') id: string, @Body() updateFeedbacksrDto: FeedbacksrDto): Promise<ResPonsData<IFeedback>>{
     try {
