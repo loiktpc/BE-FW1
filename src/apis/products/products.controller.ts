@@ -51,7 +51,7 @@ export class ProductsController {
       filename: (req, file, cb) => {
         // const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
         // const extension: string = path.parse(file.originalname).ext;
-                
+
         cb(null,   file.originalname)
     }
     })
@@ -115,10 +115,10 @@ export class ProductsController {
         cb(null, appRoot + "/src/uploads/");
       },
       filename: (req, file, cb) => {
-        const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
-        const extension: string = path.parse(file.originalname).ext;
-
-        cb(null, `${filename}${extension}`)
+        // const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+        // const extension: string = path.parse(file.originalname).ext;
+        // `${filename}${extension}`
+        cb(null, file.originalname)
     }
     })
   }))
