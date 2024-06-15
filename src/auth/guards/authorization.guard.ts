@@ -6,6 +6,7 @@ import {
   } from '@nestjs/common';
   import { JwtService } from '@nestjs/jwt';
   import { Request } from 'express';
+import { Role } from '../role.enum';
   
   @Injectable()
   export class AuthGuard implements CanActivate {
@@ -28,6 +29,10 @@ import {
         );
         
         request['user'] = payload;
+         // Check role if needed (optional):
+          if (!this.hasRole(payload.sub, Role.Admin)) {
+            throw new UnauthorizedException('Insufficient permissions');
+          }
       } catch {
         throw new UnauthorizedException();
       }
@@ -37,5 +42,12 @@ import {
     private extractTokenFromHeader(request: Request): string | undefined {
       const [type, token] = request.headers.authorization?.split(' ') ?? [];
       return type === 'Bearer' ? token : undefined;
+    }
+     // Optional helper function to check roles (assuming 'role' in payload)
+    private hasRole(userRole: string, requiredRole: Role): boolean {
+      console.log('check Role' , userRole);
+      if(userRole == '1'){
+        return true;
+      }
     }
 }

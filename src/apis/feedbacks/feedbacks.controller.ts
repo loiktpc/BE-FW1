@@ -12,22 +12,27 @@ import {
   Put,
   Query,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { FeedbacksService } from './feedbacks.service';
 import { FeedbacksrDto } from './dto/feedbacks.dto';
 import { ResPonsData } from 'src/global/globalClass';
 import { IFeedback } from './interfaces/feedbacks.interfaces';
 import { AuthGuard } from 'src/auth/guards/authorization.guard';
+import { Role } from 'src/auth/role.enum';
+import { Roles } from 'src/auth/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 
 @Controller('feedbacks')
 export class FeedbacksController {
   constructor(private readonly FeedbacksService: FeedbacksService) {}
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
+  // @Roles(Role.Admin)
   @Get()
-  async findAll(@Query('page') page: string ,@Query('numberofProduct') numberofProduct : string): Promise<ResPonsData<IFeedback[]>> {
+  async findAll(@Query('page') page: string ,@Query('numberofProduct') numberofProduct : string , @Request() req): Promise<ResPonsData<IFeedback[]>> {
     try {
-      
+      console.log('check req.user' , req.user.sub);
       return new ResPonsData<IFeedback[]>(
         await this.FeedbacksService.findAll(page , numberofProduct),
         HttpStatus.OK,
@@ -60,7 +65,7 @@ export class FeedbacksController {
       );
     }
   }
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(
     @Param('id') id: string,
